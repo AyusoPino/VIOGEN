@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Nicanor Gil, Vicente Ayuso, Rafael Marín">
     <title>Viogén - Sistema de Valoración de Riesgo</title>
-    <link rel="stylesheet" href="estilos/styles.css">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
