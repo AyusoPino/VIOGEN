@@ -1,0 +1,53 @@
+BACKLOG DE TAREAS - APLICACIÓN VIOGÉN
+
+Integrantes: Nicanor Gil, Rafael Marin, Vicente Ayuso
+
+Curso: 2º DAW - IES CASTELAR
+
+
+
+CU-01: Inicio y Menú
+
+- Crear pantalla principal con créditos del grupo
+
+- Diseñar menú para navegar libremente entre secciones
+
+
+
+CU-02: Registro de Víctimas
+
+- Crear formulario de datos de la víctima
+
+- Guardar los datos de víctimas registradas
+
+
+
+CU-03: Registro de Agresores
+
+- Crear formulario de datos del agresor
+
+- Guardar los datos de agresores registrados
+
+
+
+CU-04: Registro de Incidencias
+
+- Crear formulario para registrar agresiones o episodios
+
+- Guardar el historial de incidencias
+
+
+
+CU-05: Valoración de Riesgo
+
+- Incluir los 10 indicadores de riesgo
+
+- Calcular el nivel de riesgo según las respuestas
+
+
+
+CU-06: Informe Final
+
+- Diseñar la vista final del informe
+
+- Mostrar el resumen y la explicación del riesgo determinado
