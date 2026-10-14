@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #4c1d95;
+    color: #ffffff;
+    padding: 20px 0 15px 0;
+    border-bottom: 4px solid #ea580c;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+header p {
+    font-size: 14px;
+    color: #e9d5ff;
+    margin-bottom: 15px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav a:hover,
+nav a.activo {
+    background-color: #ea580c;
+    color: #ffffff;
+}
+
+main {
+    flex: 1;
+    max-width: 800px;
+    width: 90%;
+    margin: 30px auto;
+}
+
+.tarjeta {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    border-top: 5px solid #ea580c;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.tarjeta h2 {
+    color: #4c1d95;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 8px;
+}
+
+.tarjeta p {
+    margin-bottom: 15px;
+    color: #4b5563;
+}
+
+.lista-autores {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.lista-autores li {
+    padding: 10px 15px;
+    background-color: #faf5ff;
+    border-left: 4px solid #4c1d95;
+    margin-bottom: 8px;
+    border-radius: 0 4px 4px 0;
+    font-weight: bold;
+    color: #374151;
+}
+
+.info-curso {
+    background-color: #fff7ed;
+    border: 1px solid #ffedd5;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #9a3412;
+}
+
+.info-curso strong {
+    color: #ea580c;
+}
+
+.acciones {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.btn-principal {
+    display: inline-block;
+    background-color: #ea580c;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn-principal:hover {
+    background-color: #c2410c;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: #6b7280;
+}
