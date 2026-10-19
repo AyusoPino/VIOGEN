@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Informe de Valoración de Riesgo</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
     <div class="container">
@@ -34,7 +34,7 @@
             <p><strong>Justificación:</strong> La valoración se ha realizado computando la presencia de <?= count($indicadores_activos) ?> indicadores empíricos de riesgo y vulnerabilidad. Una evaluación del riesgo de violencia no es una predicción del futuro, sino una estimación técnico-profesional en términos probabilísticos[cite: 1]. Las medidas de protección policial deben ser proporcionales a este nivel detectado[cite: 9].</p>
         </div>
 
-        <a href="index.php" class="btn-back">Volver al Inicio</a>
+        <a href="../index.php" class="btn-back">Volver al Inicio</a>
     </div>
 </body>
 </html>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Incidencias</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
     <div class="container">
         <h2>Registro de Incidencias/Agresiones</h2>
         <?php if(isset($mensaje)) echo "<p class='success'>$mensaje</p>"; ?>
-        <form method="POST" action="registro_incidencias.php">
+        <form method="POST" action="../registro_incidencias.php">
             <label>Fecha del suceso:</label>
             <input type="date" name="fecha" required>
             

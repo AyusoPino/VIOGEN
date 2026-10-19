@@ -18,7 +18,7 @@
                 <li><a href="html/victimas.php">Víctimas</a></li>
                 <li><a href="html/agresores.php">Agresores</a></li>
                 <li><a href="html/incidencias.php">Incidencias</a></li>
-                <li><a href="html/informe.php">Informe Final</a></li>
+                <li><a href="html/valoracion.php">Informe Final</a></li>
             </ul>
         </nav>
     </header>

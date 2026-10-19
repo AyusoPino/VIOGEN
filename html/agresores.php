@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Agresores</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
     <div class="container">
         <h2>Registro de Datos del Presunto Agresor</h2>
         <?php if(isset($mensaje)) echo "<p class='success'>$mensaje</p>"; ?>
-        <form method="POST" action="registro_agresores.php">
+        <form method="POST" action="../registro_agresores.php">
             <label>Nombre completo:</label>
             <input type="text" name="nombre" required>
             
@@ -27,7 +27,7 @@
 
             <button type="submit">Guardar Agresor</button>
         </form>
-        <a href="index.php" class="btn-back">Volver al Inicio</a>
+        <a href="../index.php" class="btn-back">Volver al Inicio</a>
     </div>
 </body>
 </html>
