@@ -6,7 +6,7 @@ Curso: 2º DAW - IES CASTELAR
 
 
 
-CU-01: Inicio y Menú
+CU-01: Inicio y Menú -> Nicanor
 
 - Crear pantalla principal con créditos del grupo
 
@@ -14,7 +14,7 @@ CU-01: Inicio y Menú
 
 
 
-CU-02: Registro de Víctimas
+CU-02: Registro de Víctimas -> Nicanor
 
 - Crear formulario de datos de la víctima
 
@@ -22,7 +22,7 @@ CU-02: Registro de Víctimas
 
 
 
-CU-03: Registro de Agresores
+CU-03: Registro de Agresores -> Rafael
 
 - Crear formulario de datos del agresor
 
@@ -30,7 +30,7 @@ CU-03: Registro de Agresores
 
 
 
-CU-04: Registro de Incidencias
+CU-04: Registro de Incidencias -> Rafael
 
 - Crear formulario para registrar agresiones o episodios
 
@@ -38,7 +38,7 @@ CU-04: Registro de Incidencias
 
 
 
-CU-05: Valoración de Riesgo
+CU-05: Valoración de Riesgo -> Vicente
 
 - Incluir los 10 indicadores de riesgo
 
@@ -46,7 +46,7 @@ CU-05: Valoración de Riesgo
 
 
 
-CU-06: Informe Final
+CU-06: Informe Final -> Vicente
 
 - Diseñar la vista final del informe
 

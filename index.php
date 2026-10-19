@@ -48,7 +48,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 - IES Castelar | 2º DAW</p>
+        <p>"Por un futuro sin miedo, en igualdad y libre de violencia."</p>
     </footer>
 
 </body>
