@@ -1,21 +1,38 @@
 <?php
-$archivo_json = 'datos/incidencias.json';
+$archivoDatosJson = __DIR__ . '/datos/incidencias.json';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $datos_actuales = file_exists($archivo_json) ? json_decode(file_get_contents($archivo_json), true) : [];
-    
-    $nueva_incidencia = [
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (trim($_POST['fecha'] ?? '') === '' || trim($_POST['lugar'] ?? '') === '' || trim($_POST['descripcion'] ?? '') === '') {
+        header('Location: html/incidencias.php?error=campos');
+        exit;
+    }
+
+    $contenidoArchivoJson = file_get_contents($archivoDatosJson);
+    $registrosGuardados = json_decode($contenidoArchivoJson ?: '[]', true);
+    if (!is_array($registrosGuardados)) {
+        $registrosGuardados = [];
+    }
+
+    $nuevoRegistroIncidencia = [
         "id" => uniqid(),
-        "fecha" => $_POST['fecha'] ?? '',
-        "lugar" => $_POST['lugar'] ?? '',
-        "descripcion" => $_POST['descripcion'] ?? '',
-        "violencia_fisica" => isset($_POST['violencia_fisica']) ? true : false,
-        "amenazas_dano" => isset($_POST['amenazas_dano']) ? true : false
+        "fecha" => trim($_POST['fecha'] ?? ''),
+        "lugar" => trim($_POST['lugar'] ?? ''),
+        "descripcion" => trim($_POST['descripcion'] ?? ''),
+        "violencia_fisica" => isset($_POST['violencia_fisica']),
+        "amenazas_dano" => isset($_POST['amenazas_dano'])
     ];
 
-    $datos_actuales[] = $nueva_incidencia;
-    file_put_contents($archivo_json, json_encode($datos_actuales, JSON_PRETTY_PRINT));
-    $mensaje = "Incidencia registrada correctamente.";
+    $registrosGuardados[] = $nuevoRegistroIncidencia;
+    $datosConvertidosAJson = json_encode($registrosGuardados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $guardadoCorrecto = file_put_contents($archivoDatosJson, $datosConvertidosAJson, LOCK_EX);
+
+    if ($guardadoCorrecto === false) {
+        header('Location: html/incidencias.php?error=guardado');
+    } else {
+        header('Location: html/incidencias.php?guardado=1');
+    }
+    exit;
 }
 
-include 'html/incidencias.php';
+header('Location: html/incidencias.php');
+exit;

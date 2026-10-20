@@ -8,7 +8,11 @@
 <body>
     <div class="container">
         <h2>Registro de Incidencias/Agresiones</h2>
-        <?php if(isset($mensaje)) echo "<p class='success'>$mensaje</p>"; ?>
+        <?php if (isset($_GET['guardado'])): ?>
+            <p class="success">Incidencia registrado correctamente.</p>
+        <?php elseif (isset($_GET['error'])): ?>
+            <p class="error">No se ha podido guardar el registro. Comprueba los datos e inténtalo de nuevo.</p>
+        <?php endif; ?>
         <form method="POST" action="../registro_incidencias.php">
             <label>Fecha del suceso:</label>
             <input type="date" name="fecha" required>
@@ -27,7 +31,7 @@
 
             <button type="submit">Guardar Incidencia</button>
         </form>
-        <a href="index.php" class="btn-back">Volver al Inicio</a>
+        <a href="../index.php" class="btn-back">Volver al Inicio</a>
     </div>
 </body>
 </html>

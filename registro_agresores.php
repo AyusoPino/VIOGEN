@@ -1,23 +1,40 @@
 <?php
-$archivo_json = 'datos/agresores.json';
+$archivoDatosJson = __DIR__ . '/datos/agresores.json';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $datos_actuales = file_exists($archivo_json) ? json_decode(file_get_contents($archivo_json), true) : [];
-    
-    $nuevo_agresor = [
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (trim($_POST['nombre'] ?? '') === '' || trim($_POST['dni'] ?? '') === '') {
+        header('Location: html/agresores.php?error=campos');
+        exit;
+    }
+
+    $contenidoArchivoJson = file_get_contents($archivoDatosJson);
+    $registrosGuardados = json_decode($contenidoArchivoJson ?: '[]', true);
+    if (!is_array($registrosGuardados)) {
+        $registrosGuardados = [];
+    }
+
+    $nuevoRegistroAgresor = [
         "id" => uniqid(),
-        "nombre" => $_POST['nombre'] ?? '',
-        "dni" => $_POST['dni'] ?? '',
-        "celos" => isset($_POST['celos']) ? true : false,
-        "control" => isset($_POST['control']) ? true : false,
-        "acoso" => isset($_POST['acoso']) ? true : false,
-        "antecedentes" => isset($_POST['antecedentes']) ? true : false,
-        "toxicos" => isset($_POST['toxicos']) ? true : false
+        "nombre" => trim($_POST['nombre'] ?? ''),
+        "dni" => trim($_POST['dni'] ?? ''),
+        "celos" => isset($_POST['celos']),
+        "control" => isset($_POST['control']),
+        "acoso" => isset($_POST['acoso']),
+        "antecedentes" => isset($_POST['antecedentes']),
+        "toxicos" => isset($_POST['toxicos'])
     ];
 
-    $datos_actuales[] = $nuevo_agresor;
-    file_put_contents($archivo_json, json_encode($datos_actuales, JSON_PRETTY_PRINT));
-    $mensaje = "Agresor registrado correctamente.";
+    $registrosGuardados[] = $nuevoRegistroAgresor;
+    $datosConvertidosAJson = json_encode($registrosGuardados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $guardadoCorrecto = file_put_contents($archivoDatosJson, $datosConvertidosAJson, LOCK_EX);
+
+    if ($guardadoCorrecto === false) {
+        header('Location: html/agresores.php?error=guardado');
+    } else {
+        header('Location: html/agresores.php?guardado=1');
+    }
+    exit;
 }
 
-include 'html/agresores.php';
+header('Location: html/agresores.php');
+exit;

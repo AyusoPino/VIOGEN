@@ -1,50 +1,55 @@
 <?php
-// Lectura de datos
-$victimas = file_exists('datos/victimas.json') ? json_decode(file_get_contents('datos/victimas.json'), true) : [];
-$agresores = file_exists('datos/agresores.json') ? json_decode(file_get_contents('datos/agresores.json'), true) : [];
-$incidencias = file_exists('datos/incidencias.json') ? json_decode(file_get_contents('datos/incidencias.json'), true) : [];
+// Se utilizan los registros más recientes como ejemplo académico.
+$contenidoVictimasJson = file_get_contents(__DIR__ . '/datos/victimas.json');
+$contenidoAgresoresJson = file_get_contents(__DIR__ . '/datos/agresores.json');
+$contenidoIncidenciasJson = file_get_contents(__DIR__ . '/datos/incidencias.json');
 
-// Tomamos los últimos registros para la simulación
-$ultima_victima = end($victimas) ?: null;
-$ultimo_agresor = end($agresores) ?: null;
-$ultima_incidencia = end($incidencias) ?: null;
+$victimasRegistradas = json_decode($contenidoVictimasJson ?: '[]', true);
+$agresoresRegistrados = json_decode($contenidoAgresoresJson ?: '[]', true);
+$incidenciasRegistradas = json_decode($contenidoIncidenciasJson ?: '[]', true);
 
-$indicadores_activos = [];
-$puntuacion_riesgo = 0;
+$victimasRegistradas = is_array($victimasRegistradas) ? $victimasRegistradas : [];
+$agresoresRegistrados = is_array($agresoresRegistrados) ? $agresoresRegistrados : [];
+$incidenciasRegistradas = is_array($incidenciasRegistradas) ? $incidenciasRegistradas : [];
 
-// Evaluación de 10 indicadores (basados en GUIA PROCEDIMIENTO VPER 4.1.pdf)
-if ($ultima_incidencia) {
-    if ($ultima_incidencia['violencia_fisica']) { $indicadores_activos[] = "Violencia física (Ind. 2)[cite: 23]"; $puntuacion_riesgo += 2; }
-    if ($ultima_incidencia['amenazas_dano']) { $indicadores_activos[] = "Amenazas de daño (Ind. 5)[cite: 25]"; $puntuacion_riesgo += 2; }
+$ultimaVictimaRegistrada = !empty($victimasRegistradas) ? end($victimasRegistradas) : null;
+$ultimoAgresorRegistrado = !empty($agresoresRegistrados) ? end($agresoresRegistrados) : null;
+$ultimaIncidenciaRegistrada = !empty($incidenciasRegistradas) ? end($incidenciasRegistradas) : null;
+
+$indicadoresRiesgoDetectados = [];
+$puntuacionTotalRiesgo = 0;
+
+// Diez indicadores de los formularios; la puntuación es solo una simulación académica.
+$indicadoresEvaluados = [
+    ['registro' => $ultimaIncidenciaRegistrada, 'campo' => 'violencia_fisica', 'nombre' => 'Violencia física', 'puntos' => 2],
+    ['registro' => $ultimaIncidenciaRegistrada, 'campo' => 'amenazas_dano', 'nombre' => 'Amenazas de daño', 'puntos' => 2],
+    ['registro' => $ultimoAgresorRegistrado, 'campo' => 'celos', 'nombre' => 'Celos exagerados', 'puntos' => 1],
+    ['registro' => $ultimoAgresorRegistrado, 'campo' => 'control', 'nombre' => 'Conductas de control', 'puntos' => 1],
+    ['registro' => $ultimoAgresorRegistrado, 'campo' => 'acoso', 'nombre' => 'Conductas de acoso', 'puntos' => 2],
+    ['registro' => $ultimoAgresorRegistrado, 'campo' => 'antecedentes', 'nombre' => 'Antecedentes penales o policiales', 'puntos' => 1],
+    ['registro' => $ultimoAgresorRegistrado, 'campo' => 'toxicos', 'nombre' => 'Abuso de tóxicos', 'puntos' => 1],
+    ['registro' => $ultimaVictimaRegistrada, 'campo' => 'extranjera', 'nombre' => 'Víctima extranjera', 'puntos' => 1],
+    ['registro' => $ultimaVictimaRegistrada, 'campo' => 'menores_cargo', 'nombre' => 'Menores a cargo', 'puntos' => 1],
+    ['registro' => $ultimaVictimaRegistrada, 'campo' => 'temor_vida', 'nombre' => 'Temor por su vida', 'puntos' => 2]
+];
+
+foreach ($indicadoresEvaluados as $indicadorEvaluado) {
+    if (!empty($indicadorEvaluado['registro'][$indicadorEvaluado['campo']])) {
+        $indicadoresRiesgoDetectados[] = $indicadorEvaluado['nombre'];
+        $puntuacionTotalRiesgo += $indicadorEvaluado['puntos'];
+    }
 }
 
-if ($ultimo_agresor) {
-    if ($ultimo_agresor['celos']) { $indicadores_activos[] = "Celos exagerados (Ind. 7)[cite: 27]"; $puntuacion_riesgo += 1; }
-    if ($ultimo_agresor['control']) { $indicadores_activos[] = "Conductas de control (Ind. 8)[cite: 28]"; $puntuacion_riesgo += 1; }
-    if ($ultimo_agresor['acoso']) { $indicadores_activos[] = "Conductas de acoso (Ind. 9)[cite: 28]"; $puntuacion_riesgo += 2; }
-    if ($ultimo_agresor['antecedentes']) { $indicadores_activos[] = "Antecedentes penales/policiales (Ind. 15)[cite: 32]"; $puntuacion_riesgo += 1; }
-    if ($ultimo_agresor['toxicos']) { $indicadores_activos[] = "Abuso de tóxicos (Ind. 21)[cite: 34]"; $puntuacion_riesgo += 1; }
+$nivelRiesgoOrientativo = 'SIN INDICADORES DETECTADOS';
+$claseVisualRiesgo = 'riesgo-bajo';
+if ($puntuacionTotalRiesgo >= 7) {
+    $nivelRiesgoOrientativo = 'NUMEROSOS INDICADORES';
+    $claseVisualRiesgo = 'riesgo-alto';
+} elseif ($puntuacionTotalRiesgo >= 4) {
+    $nivelRiesgoOrientativo = 'VARIOS INDICADORES';
+    $claseVisualRiesgo = 'riesgo-medio';
+} elseif ($puntuacionTotalRiesgo >= 1) {
+    $nivelRiesgoOrientativo = 'ALGUNOS INDICADORES';
 }
 
-if ($ultima_victima) {
-    if ($ultima_victima['extranjera']) { $indicadores_activos[] = "Víctima extranjera (Ind. 28)[cite: 37]"; $puntuacion_riesgo += 1; }
-    if ($ultima_victima['menores_cargo']) { $indicadores_activos[] = "Menores a cargo (Ind. 29)[cite: 37]"; $puntuacion_riesgo += 1; }
-    if ($ultima_victima['temor_vida']) { $indicadores_activos[] = "Temor por su vida (Ind. 35)[cite: 40]"; $puntuacion_riesgo += 2; }
-}
-
-// Cálculo del nivel de riesgo
-$nivel_riesgo = "NO APRECIADO";
-$clase_riesgo = "riesgo-bajo";
-
-if ($puntuacion_riesgo >= 7) {
-    $nivel_riesgo = "ALTO / EXTREMO";
-    $clase_riesgo = "riesgo-alto";
-} elseif ($puntuacion_riesgo >= 4) {
-    $nivel_riesgo = "MEDIO";
-    $clase_riesgo = "riesgo-medio";
-} elseif ($puntuacion_riesgo >= 1) {
-    $nivel_riesgo = "BAJO";
-    $clase_riesgo = "riesgo-bajo";
-}
-
-include 'html/valoracion.php';
+include __DIR__ . '/html/valoracion.php';

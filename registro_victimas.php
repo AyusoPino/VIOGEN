@@ -1,21 +1,38 @@
 <?php
-$archivo_json = 'datos/victimas.json';
+$archivoDatosJson = __DIR__ . '/datos/victimas.json';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $datos_actuales = file_exists($archivo_json) ? json_decode(file_get_contents($archivo_json), true) : [];
-    
-    $nueva_victima = [
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (trim($_POST['nombre'] ?? '') === '' || trim($_POST['dni'] ?? '') === '') {
+        header('Location: html/victimas.php?error=campos');
+        exit;
+    }
+
+    $contenidoArchivoJson = file_get_contents($archivoDatosJson);
+    $registrosGuardados = json_decode($contenidoArchivoJson ?: '[]', true);
+    if (!is_array($registrosGuardados)) {
+        $registrosGuardados = [];
+    }
+
+    $nuevoRegistroVictima = [
         "id" => uniqid(),
-        "nombre" => $_POST['nombre'] ?? '',
-        "dni" => $_POST['dni'] ?? '',
-        "extranjera" => isset($_POST['extranjera']) ? true : false,
-        "menores_cargo" => isset($_POST['menores_cargo']) ? true : false,
-        "temor_vida" => isset($_POST['temor_vida']) ? true : false
+        "nombre" => trim($_POST['nombre'] ?? ''),
+        "dni" => trim($_POST['dni'] ?? ''),
+        "extranjera" => isset($_POST['extranjera']),
+        "menores_cargo" => isset($_POST['menores_cargo']),
+        "temor_vida" => isset($_POST['temor_vida'])
     ];
 
-    $datos_actuales[] = $nueva_victima;
-    file_put_contents($archivo_json, json_encode($datos_actuales, JSON_PRETTY_PRINT));
-    $mensaje = "Víctima registrada correctamente.";
+    $registrosGuardados[] = $nuevoRegistroVictima;
+    $datosConvertidosAJson = json_encode($registrosGuardados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $guardadoCorrecto = file_put_contents($archivoDatosJson, $datosConvertidosAJson, LOCK_EX);
+
+    if ($guardadoCorrecto === false) {
+        header('Location: html/victimas.php?error=guardado');
+    } else {
+        header('Location: html/victimas.php?guardado=1');
+    }
+    exit;
 }
 
-include 'html/victimas.php';
+header('Location: html/victimas.php');
+exit;

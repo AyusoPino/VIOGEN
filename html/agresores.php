@@ -8,7 +8,11 @@
 <body>
     <div class="container">
         <h2>Registro de Datos del Presunto Agresor</h2>
-        <?php if(isset($mensaje)) echo "<p class='success'>$mensaje</p>"; ?>
+        <?php if (isset($_GET['guardado'])): ?>
+            <p class="success">Agresor registrado correctamente.</p>
+        <?php elseif (isset($_GET['error'])): ?>
+            <p class="error">No se ha podido guardar el registro. Comprueba los datos e inténtalo de nuevo.</p>
+        <?php endif; ?>
         <form method="POST" action="../registro_agresores.php">
             <label>Nombre completo:</label>
             <input type="text" name="nombre" required>

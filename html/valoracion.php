@@ -1,9 +1,16 @@
+<?php
+// Esta página es una vista: el informe calcula primero las variables necesarias.
+if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRiesgo)) {
+    header("Location: ../informe.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Informe de Valoración de Riesgo</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <div class="container">
@@ -11,30 +18,30 @@
         
         <div class="card">
             <h3>Datos del Caso</h3>
-            <p><strong>Víctima:</strong> <?= $ultima_victima['nombre'] ?? 'No registrada' ?></p>
-            <p><strong>Presunto Agresor:</strong> <?= $ultimo_agresor['nombre'] ?? 'No registrado' ?></p>
-            <p><strong>Última Incidencia:</strong> <?= $ultima_incidencia['fecha'] ?? 'No registrada' ?> - <?= htmlspecialchars($ultima_incidencia['descripcion'] ?? '') ?></p>
+            <p><strong>Víctima:</strong> <?= htmlspecialchars($ultimaVictimaRegistrada['nombre'] ?? 'No registrada') ?></p>
+            <p><strong>Presunto Agresor:</strong> <?= htmlspecialchars($ultimoAgresorRegistrado['nombre'] ?? 'No registrado') ?></p>
+            <p><strong>Última Incidencia:</strong> <?= htmlspecialchars($ultimaIncidenciaRegistrada['fecha'] ?? 'No registrada') ?> - <?= htmlspecialchars($ultimaIncidenciaRegistrada['descripcion'] ?? '') ?></p>
         </div>
 
         <div class="card">
-            <h3>Indicadores de Riesgo Detectados (Mínimo 10 evaluados)</h3>
-            <?php if (empty($indicadores_activos)): ?>
+            <h3>Indicadores de riesgo detectados (10 considerados)</h3>
+            <?php if (empty($indicadoresRiesgoDetectados)): ?>
                 <p>No se han detectado indicadores de riesgo activos.</p>
             <?php else: ?>
                 <ul>
-                    <?php foreach ($indicadores_activos as $ind): ?>
-                        <li><?= $ind ?></li>
+                    <?php foreach ($indicadoresRiesgoDetectados as $nombreIndicadorDetectado): ?>
+                        <li><?= htmlspecialchars($nombreIndicadorDetectado) ?></li>
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
         </div>
 
-        <div class="card alert <?= $clase_riesgo ?>">
-            <h3>Valoración Orientativa del Riesgo: <?= $nivel_riesgo ?></h3>
-            <p><strong>Justificación:</strong> La valoración se ha realizado computando la presencia de <?= count($indicadores_activos) ?> indicadores empíricos de riesgo y vulnerabilidad. Una evaluación del riesgo de violencia no es una predicción del futuro, sino una estimación técnico-profesional en términos probabilísticos[cite: 1]. Las medidas de protección policial deben ser proporcionales a este nivel detectado[cite: 9].</p>
+        <div class="card alert <?= htmlspecialchars($claseVisualRiesgo) ?>">
+            <h3>Valoración Orientativa del Riesgo: <?= $nivelRiesgoOrientativo ?></h3>
+            <p><strong>Justificación:</strong> La valoración se ha realizado computando la presencia de <?= count($indicadoresRiesgoDetectados) ?> indicadores de riesgo y vulnerabilidad. Esta clasificación se obtiene con una puntuación creada únicamente para esta práctica y no equivale a una valoración policial oficial. Los indicadores no permiten por sí solos determinar el peligro real.</p>
         </div>
 
-        <a href="../index.php" class="btn-back">Volver al Inicio</a>
+        <a href="./index.php" class="btn-back">Volver al Inicio</a>
     </div>
 </body>
 </html>
