@@ -9,6 +9,7 @@
 </head>
 <body>
 
+    <!-- cabecera y menu de navegacion -->
     <header>
         <h1>Sistema Viogén</h1>
         <p>Evaluación y Valoración del Riesgo</p>
@@ -23,6 +24,7 @@
         </nav>
     </header>
 
+    <!-- presentamos el proyecto y sus integrantes -->
     <main>
         <section class="tarjeta">
             <h2>Créditos del Proyecto</h2>
@@ -47,6 +49,7 @@
         </section>
     </main>
 
+    <!-- pie de pagina -->
     <footer>
         <p>"Por un futuro sin miedo, en igualdad y libre de violencia."</p>
     </footer>

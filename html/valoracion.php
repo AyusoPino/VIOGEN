@@ -1,9 +1,9 @@
 <?php
-// Esta página es una vista: el informe calcula primero las variables necesarias.
-if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRiesgo)) {
-    header("Location: ../informe.php");
-    exit;
-}
+// los resultados se calculan en informe.php antes de mostrar esta vista
+if (!isset($indicadoresRiesgoDetectados)) {
+    // si entramos directamente mostramos un enlace al informe
+    echo '<p>Abre el informe desde <a href="../informe.php">Informe final</a>.</p>';
+} else {
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,6 +21,7 @@ if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRi
             <p><strong>Víctima:</strong> <?= htmlspecialchars($ultimaVictimaRegistrada['nombre'] ?? 'No registrada') ?></p>
             <p><strong>Presunto Agresor:</strong> <?= htmlspecialchars($ultimoAgresorRegistrado['nombre'] ?? 'No registrado') ?></p>
             <p><strong>Última Incidencia:</strong> <?= htmlspecialchars($ultimaIncidenciaRegistrada['fecha'] ?? 'No registrada') ?> - <?= htmlspecialchars($ultimaIncidenciaRegistrada['descripcion'] ?? '') ?></p>
+            <p><strong>Lugar:</strong> <?= htmlspecialchars($ultimaIncidenciaRegistrada['lugar'] ?? '') ?></p>
         </div>
 
         <div class="card">
@@ -45,3 +46,7 @@ if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRi
     </div>
 </body>
 </html>
+<?php
+// termina la comprobacion del informe
+}
+?>
