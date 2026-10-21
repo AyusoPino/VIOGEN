@@ -9,6 +9,7 @@
 </head>
 <body>
 
+    <!-- cabecera y menu de navegacion -->
     <header>
         <h1>Sistema Viogén</h1>
         <p>Evaluación y Valoración del Riesgo</p>
@@ -18,11 +19,12 @@
                 <li><a href="html/victimas.php">Víctimas</a></li>
                 <li><a href="html/agresores.php">Agresores</a></li>
                 <li><a href="html/incidencias.php">Incidencias</a></li>
-                <li><a href="informe.php">Informe Final</a></li>
+                <li><a href="html/victimas.php">Generar informe</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- presentamos el proyecto y sus integrantes -->
     <main>
         <section class="tarjeta">
             <h2>Créditos del Proyecto</h2>
@@ -47,6 +49,7 @@
         </section>
     </main>
 
+    <!-- pie de pagina -->
     <footer>
         <p>"Por un futuro sin miedo, en igualdad y libre de violencia."</p>
     </footer>

@@ -1,9 +1,9 @@
 <?php
-// Esta página es una vista: el informe calcula primero las variables necesarias.
-if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRiesgo)) {
-    header("Location: ../informe.php");
-    exit;
-}
+// los resultados se calculan en informe.php antes de mostrar esta vista
+if (!$informeEnviado) {
+    // si entramos directamente mostramos un enlace al informe
+    echo '<p>Primero completa los formularios desde <a href="html/victimas.php">registro de victimas</a>.</p>';
+} else {
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,13 +14,19 @@ if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRi
 </head>
 <body>
     <div class="container">
-        <h2>Informe Final de Valoración VioGén (Simulación)</h2>
+        <h2>Informe Final de Valoración VioGén</h2>
+        <?php if ($datosGuardados): ?>
+            <p class="card">Los datos de victima, agresor e incidencia se han guardado en sus archivos json al generar el informe.</p>
+        <?php elseif ($mensajeError != ''): ?>
+            <p class="card"><?= htmlspecialchars($mensajeError) ?></p>
+        <?php endif; ?>
         
         <div class="card">
             <h3>Datos del Caso</h3>
-            <p><strong>Víctima:</strong> <?= htmlspecialchars($ultimaVictimaRegistrada['nombre'] ?? 'No registrada') ?></p>
-            <p><strong>Presunto Agresor:</strong> <?= htmlspecialchars($ultimoAgresorRegistrado['nombre'] ?? 'No registrado') ?></p>
-            <p><strong>Última Incidencia:</strong> <?= htmlspecialchars($ultimaIncidenciaRegistrada['fecha'] ?? 'No registrada') ?> - <?= htmlspecialchars($ultimaIncidenciaRegistrada['descripcion'] ?? '') ?></p>
+            <p><strong>Víctima:</strong> <?= htmlspecialchars($victima_nombre ?: 'No registrada') ?></p>
+            <p><strong>Presunto Agresor:</strong> <?= htmlspecialchars($agresor_nombre ?: 'No registrado') ?></p>
+            <p><strong>Última Incidencia:</strong> <?= htmlspecialchars($incidencia_fecha ?: 'No registrada') ?> - <?= htmlspecialchars($incidencia_descripcion) ?></p>
+            <p><strong>Lugar:</strong> <?= htmlspecialchars($incidencia_lugar) ?></p>
         </div>
 
         <div class="card">
@@ -45,3 +51,7 @@ if (!isset($indicadoresRiesgoDetectados, $nivelRiesgoOrientativo, $claseVisualRi
     </div>
 </body>
 </html>
+<?php
+// termina la comprobacion del informe
+}
+?>
